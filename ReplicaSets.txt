@@ -1,0 +1,93 @@
+Replication Controller
+ - to prevent users from accessing the pod due to a failed instance container
+ for this purpose, a replica pod is created
+ - replication controller helps run multiple instances of a single
+ pod in the kubernetes cluster, thus providing high availability
+ - replication controller can also help bring up a new pod when
+ the existing one fails even if you failed to configure the controller
+
+ Replication controllers can also be used to create 
+ load balancers and auto scaling to share the load among them
+
+
+kubectl create -f replicaset-definition.yml
+kubectl get replicaset
+kubectl delete replicaset myapp-replicaset
+
+ kubectl replace -f <file name>
+ kubectl get Replicationcontrollers
+ kubectl get replicaset
+ kubectl scale --replicas=6 -f <file name>
+
+ kubectl scale --replicas=6 replicaset==type myapp-replicaset==name
+
+ NOTE: to get the yaml file for a replicaset which you dont readily have use the commond
+
+ kubectl get rs <name of rs> -o yaml > new-replica-set.yaml
+
+
+ Deployments
+ Deployment provides the cabability to upgrade the underlying
+ instances seamlessly using rolling updates,
+ undo changes and pause and resume changes.
+
+ This is done using the deployment definition file
+
+ commands
+ kubectl create -f deployment-definition.yml
+ kubectl get deployments
+
+kubectl get rs
+kubectl get pods
+
+
+kubectl get all 
+
+
+Rollout and Versioning
+
+kubectl rollout status
+kubectl rollout history deployment/myapp-deployment
+
+Rollout Deployment sTratety
+1. Recreate: destroy all previous then generate new ones
+2. Rolling update: destroy one and bring up one continously
+
+update is done by modifying the yml file dand using 
+
+kubectl apply -f file.yml
+
+or
+
+kubectl set image deployment/myapp-deployment \nginx=nginx:1.9.1
+
+
+ROLLback to previous version with
+
+kubectl rollout undo deployment/myapp-deployment
+
+kubectl run nginx --image=nginx actually creates a deployment not only a pod
+
+
+kubectl Networking
+ip address is assigned to a pod 10.244.0.2
+
+ ssh curl http:ipaddress
+
+
+ Service Types
+  - NodePort
+  - ClusterIP
+  -loadBalancer
+
+  NodePort
+  
+
+  kubectl create -f service-definition.yml
+
+  kubectl get services
+
+  curl http://192.168.1.2:3008
+
+
+loadBalancer
